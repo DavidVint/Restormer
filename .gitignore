@@ -8,3 +8,7 @@
 *.npy
 .DS_Store
 
+.idea/
+__pycache__/
+*.pt
+*.ckpt
