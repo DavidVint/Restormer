@@ -1,0 +1,22 @@
+# Hand-written by turbbench's onboarding - the upstream repo ships no requirements.txt
+# at all (only setup.py, for its own BasicSR-style training/eval framework). Trimmed
+# to what adapters/Restormer/model_adapter.py's import path actually needs: it imports
+# only basicsr.models.archs.restormer_arch.Restormer, isolated from the rest of
+# BasicSR on purpose (see model_adapter.py's own docstring) - not basicsr's generic
+# training/dataset/config harness, and no custom CUDA ops (unlike e.g. EDVR, this repo
+# doesn't use deformable convolution at all).
+#
+# numpy/opencv-python-headless/torchvision/lmdb are still needed even though
+# model_adapter.py never calls them directly: importing basicsr.models.archs.
+# restormer_arch requires basicsr.utils (for get_root_logger), and basicsr/utils/
+# __init__.py unconditionally imports img_util.py (cv2+numpy+torchvision.utils at
+# module level) and create_lmdb.py (lmdb at module level) - used by other repo
+# functionality this adapter never calls, but the imports themselves still have to
+# succeed. einops is restormer_arch.py's own direct dependency (its attention/layer-
+# norm reshaping).
+einops
+lmdb
+numpy
+opencv-python-headless
+torch
+torchvision
